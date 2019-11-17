@@ -6,32 +6,31 @@ import me.Samkist.Library.Exceptions.BookUnavailableException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Library {
     private ArrayList<Book> borrowed = new ArrayList<>();
     private ArrayList<Book> available = new ArrayList<>();
+    private ArrayList<Book> allBooks = new ArrayList<>();
 
     public void addBook(Book b) {
         available.add(b);
+        allBooks.add(b);
     }
 
     public void borrowBook(String title, String borrower, Date d) throws BookNotFoundException, BookUnavailableException {
         ArrayList<Book> books = getBooksByName(title);
-        AtomicBoolean successful = new AtomicBoolean(false);
-        books.forEach(book -> {
+        for(Book book : books) {
             if(!book.isBorrowed()) {
                 available.remove(book);
                 book.borrowBook(borrower, d);
                 borrowed.add(book);
-                successful.set(true);
+                return;
             }
-        });
-        if(!successful.get())
+        }
         throw new BookUnavailableException("All books with this title have been borrowed.");
     }
 
-    public ArrayList<Book> returnBook(String title) throws BookNotFoundException, BookUnavailableException {
+    public ArrayList<Book> getBorrowedBooksByName(String title) throws BookNotFoundException, BookUnavailableException {
         ArrayList<Book> books = getBooksByName(title);
         ArrayList<Book> borrowedBooks = new ArrayList<>();
         books.forEach(book -> {
@@ -57,6 +56,15 @@ public class Library {
         return lateBooks;
     }
 
+    public ArrayList<Book> getAllBooksByKeywords(ArrayList<String> keywords) {
+        ArrayList<Book> books = new ArrayList<>();
+        available.forEach(book -> book.getKeywords().forEach(keyword -> {
+           if(keywords.contains(keyword))
+               books.add(book);
+        }));
+        return books;
+    }
+
 
     public void printAvailableBooks() {
         available.forEach(b -> System.out.println(b.getTitle()));
@@ -68,12 +76,7 @@ public class Library {
 
     public ArrayList<Book> getBooksByName(String title) throws BookNotFoundException {
         ArrayList<Book> books = new ArrayList<>();
-        borrowed.forEach(book -> {
-            if(book.getTitle().equalsIgnoreCase(title)) {
-                books.add(book);
-            }
-        });
-        available.forEach(book -> {
+        allBooks.forEach(book -> {
             if(book.getTitle().equalsIgnoreCase(title)) {
                 books.add(book);
             }
@@ -84,9 +87,25 @@ public class Library {
         return books;
     }
 
+    public Book getFirstAvailableBookByName(String title) throws BookNotFoundException {
+        for(Book b : available) {
+            if(b.getTitle().equals(title))
+                return b;
+        }
+        throw new BookNotFoundException("No book was found by that title.");
+    }
+
     //APPLIES TO BOTH BORROWED AND AVAILABLE
     public boolean hasBook(Book b) {
         return borrowed.contains(b) || available.contains(b);
+    }
+
+    public ArrayList<Book> getBorrowed() {
+        return borrowed;
+    }
+
+    public ArrayList<Book> getAvailable() {
+        return available;
     }
 
 }
