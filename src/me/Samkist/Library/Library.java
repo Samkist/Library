@@ -30,6 +30,15 @@ public class Library {
         throw new BookUnavailableException("All books with this title have been borrowed.");
     }
 
+    public void returnBook(Book b) throws BookUnavailableException {
+        if(borrowed.remove(b)) {
+            b.returnBook();
+            available.add(b);
+            return;
+        }
+        throw new BookUnavailableException("Book is not in borrowed list");
+    }
+
     public ArrayList<Book> getBorrowedBooksByName(String title) throws BookNotFoundException, BookUnavailableException {
         ArrayList<Book> books = getBooksByName(title);
         ArrayList<Book> borrowedBooks = new ArrayList<>();

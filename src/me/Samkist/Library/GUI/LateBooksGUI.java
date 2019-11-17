@@ -12,4 +12,8 @@ public class LateBooksGUI extends GBDialog {
         super(jFrame);
         this.gui = gui;
     }
+
+    public void init() {
+
+    }
 }

@@ -21,9 +21,10 @@ public class BorrowedBooksGUI extends GBDialog {
         bookDetails.setEditable(false);
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "Duplicates"})
     public void init() {
         DefaultListModel model = (DefaultListModel) bookList.getModel();
+        bookDetails.setText("");
         model.removeAllElements();
         gui.getLibrary().getBorrowed().forEach(book -> {
                 model.addElement(book.getTitle());
