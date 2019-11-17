@@ -51,7 +51,7 @@ public class Library {
         return borrowedBooks;
     }
 
-    public ArrayList<Book> getLateBooks() throws BookUnavailableException {
+    public ArrayList<Book> getLateBooks() {
         ArrayList<Book> lateBooks = new ArrayList<>();
         borrowed.forEach(book -> {
             Calendar cal = Calendar.getInstance();
@@ -60,8 +60,6 @@ public class Library {
                 lateBooks.add(book);
             }
         });
-        if(lateBooks.size() == 0)
-            throw new BookUnavailableException("There are no late books.");
         return lateBooks;
     }
 
@@ -70,6 +68,10 @@ public class Library {
         allBooks.forEach(book -> book.getKeywords().forEach(keyword -> {
            if(keywords.contains(keyword))
                books.add(book);
+           keywords.forEach(kw -> {
+               if(keyword.contains(kw))
+                   books.add(book);
+           });
         }));
         return books;
     }

@@ -15,22 +15,23 @@ public class LoanMenuGUI extends GBDialog {
     private Main gui;
     private JList bookList = addList(1, 4, 1, 5);
     private JLabel borrowerLabel = addLabel("Borrower Name: ", 1, 1, 1, 1);
-    private JLabel dateLabel = addLabel("Date: ", 4, 1, 1,1);
+    private JLabel dateLabel = addLabel("Date: ", 3, 1, 1,1);
     private JButton loanButton = addButton("Loan Book", 5, 1 ,1 ,1);
     private JTextField borrowerField = addTextField("", 2, 1, 1, 1);
-    private JTextField dateField = addTextField("mm/dd/yyyy", 3, 1, 1,1);
+    private JTextField dateField = addTextField("mm/dd/yyyy", 4, 1, 1,1);
     private ArrayList<Book> uniqueBooks = new ArrayList<>();
 
     public LoanMenuGUI(JFrame jFrame, Main gui) {
         super(jFrame);
         this.gui = gui;
-        setTitle("Loan A Book");
+        setTitle("Loan a Book");
         setSize(500, 500);
     }
 
     @SuppressWarnings({"unchecked", "Duplicates"})
     public void init() {
         DefaultListModel model = (DefaultListModel)bookList.getModel();
+        loanButton.setEnabled(true);
         model.removeAllElements();
         gui.getLibrary().getAvailable().forEach(book -> {
             if(!model.contains(book.getTitle()))
@@ -48,6 +49,8 @@ public class LoanMenuGUI extends GBDialog {
         } catch (Exception ignored) {
 
         }
+        if(model.size() == 0)
+            loanButton.setEnabled(false);
     }
 
     private void loanBook(String borrower, String date) {
@@ -61,6 +64,8 @@ public class LoanMenuGUI extends GBDialog {
             gui.getLibrary().borrowBook(b.getTitle(), borrower, new Date(date));
         } catch(BookNotFoundException | BookUnavailableException e) {
             messageBox(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            messageBox("Invalid date.");
         }
     }
 

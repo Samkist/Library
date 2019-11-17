@@ -21,6 +21,7 @@ public class SearchByTitleGUI extends GBDialog {
         super(jFrame);
         this.gui = gui;
         setSize(500, 500);
+        setTitle("Search by Title");
         searchResultDetails.setEditable(false);
     }
 

@@ -16,6 +16,8 @@ public class ReturnMenuGUI extends GBDialog {
     public ReturnMenuGUI(JFrame jFrame, Main gui) {
         super(jFrame);
         this.gui = gui;
+        setTitle("Return a Book");
+        setSize(500, 500);
     }
 
     @SuppressWarnings({"unchecked", "Duplicates"})

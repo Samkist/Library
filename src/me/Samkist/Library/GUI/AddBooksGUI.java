@@ -29,6 +29,11 @@ public class AddBooksGUI extends GBDialog {
             for(int i = 0; i < bookQuantityField.getNumber(); i++) {
                 gui.getLibrary().addBook(new Book(bookNameField.getText(), authorNameField.getText()));
             }
+            messageBox("Added " + bookQuantityField.getNumber() + " book(s) with title " +
+                    bookNameField.getText() + " and author " + authorNameField.getText());
+            bookNameField.setText("");
+            authorNameField.setText("");
+            bookQuantityField.setNumber(0);
         }
     }
 
