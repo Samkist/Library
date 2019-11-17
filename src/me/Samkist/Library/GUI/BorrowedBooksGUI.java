@@ -24,11 +24,8 @@ public class BorrowedBooksGUI extends GBDialog {
     @SuppressWarnings("unchecked")
     public void init() {
         DefaultListModel model = (DefaultListModel) bookList.getModel();
-        for (int i = 0; i < model.getSize(); i++) {
-            model.remove(i);
-        }
+        model.removeAllElements();
         gui.getLibrary().getBorrowed().forEach(book -> {
-            if (!model.contains(book.getTitle()))
                 model.addElement(book.getTitle());
         });
         try {

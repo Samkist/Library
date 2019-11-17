@@ -21,9 +21,9 @@ public class Library {
         ArrayList<Book> books = getBooksByName(title);
         for(Book book : books) {
             if(!book.isBorrowed()) {
-                available.remove(book);
                 book.borrowBook(borrower, d);
                 borrowed.add(book);
+                available.remove(book);
                 return;
             }
         }
@@ -58,7 +58,7 @@ public class Library {
 
     public ArrayList<Book> getAllBooksByKeywords(ArrayList<String> keywords) {
         ArrayList<Book> books = new ArrayList<>();
-        available.forEach(book -> book.getKeywords().forEach(keyword -> {
+        allBooks.forEach(book -> book.getKeywords().forEach(keyword -> {
            if(keywords.contains(keyword))
                books.add(book);
         }));
@@ -89,15 +89,18 @@ public class Library {
 
     public Book getFirstAvailableBookByName(String title) throws BookNotFoundException {
         for(Book b : available) {
-            if(b.getTitle().equals(title))
+            if(b.getTitle().equalsIgnoreCase(title))
                 return b;
         }
         throw new BookNotFoundException("No book was found by that title.");
     }
 
-    //APPLIES TO BOTH BORROWED AND AVAILABLE
-    public boolean hasBook(Book b) {
-        return borrowed.contains(b) || available.contains(b);
+    public Book getFirstBookByName(String title) throws BookNotFoundException {
+        for(Book b : allBooks) {
+            if(b.getTitle().equalsIgnoreCase(title))
+                return b;
+        }
+        throw new BookNotFoundException("No book was found by that title.");
     }
 
     public ArrayList<Book> getBorrowed() {

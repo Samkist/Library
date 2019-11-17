@@ -46,12 +46,14 @@ public class Main extends GBFrame {
             availableBooksGUI.setVisible(true);
         }
         if(jButton.equals(openLoanMenuButton)) {
+            loanMenuGUI.init();
             loanMenuGUI.setVisible(true);
         }
         if(jButton.equals(openReturnMenuButton)) {
             returnMenuGUI.setVisible(true);
         }
         if(jButton.equals(openBorrowedBooksMenuButton)) {
+            borrowedBooksGUI.init();
             borrowedBooksGUI.setVisible(true);
         }
         if(jButton.equals(openLateBooksMenuButton)) {

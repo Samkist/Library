@@ -21,6 +21,7 @@ public class Book {
     public void borrowBook(String borrower, Date d) {
         this.borrower = borrower;
         this.dateBorrowed = d;
+        System.out.println("Borrowing book " + title + " for " + borrower);
         isBorrowed = true;
     }
 

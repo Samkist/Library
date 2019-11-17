@@ -22,15 +22,13 @@ public class AvailableBooksGUI extends GBDialog {
         this.setSize(500, 500);
         bookDetails.setEditable(false);
     }
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "Duplicates"})
     public void init() {
         DefaultListModel model = (DefaultListModel)bookList.getModel();
-        for(int i = 0; i < model.getSize(); i++) {
-            model.remove(i);
-        }
+        model.removeAllElements();
         gui.getLibrary().getAvailable().forEach(book -> {
             if(!model.contains(book.getTitle()))
-               model.addElement(book.getTitle());
+                model.addElement(book.getTitle());
         });
         try {
             for (int i = 0; i < model.size(); i++) {
