@@ -6,6 +6,7 @@ import me.Samkist.Library.Exceptions.BookUnavailableException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 public class Library {
     private ArrayList<Book> borrowed = new ArrayList<>();
@@ -69,7 +70,7 @@ public class Library {
            if(keywords.contains(keyword))
                books.add(book);
            keywords.forEach(kw -> {
-               if(keyword.contains(kw))
+               if(Pattern.compile(Pattern.quote(kw), Pattern.CASE_INSENSITIVE).matcher(keyword).find())
                    books.add(book);
            });
         }));
@@ -120,6 +121,10 @@ public class Library {
 
     public ArrayList<Book> getAvailable() {
         return available;
+    }
+
+    public ArrayList<Book> getAllBooks() {
+        return allBooks;
     }
 
 }

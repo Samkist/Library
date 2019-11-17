@@ -8,9 +8,10 @@ import me.Samkist.Library.Main;
 import javax.swing.*;
 import java.util.ArrayList;
 
-public class AvailableBooksGUI extends GBDialog {
+public class AvailableBooksGUI extends CustomDialog {
 
     private Main gui;
+    JFrame frame;
     private JList bookList = addList(1, 1, 1, 1);
     private JTextArea bookDetails = addTextArea("No books available.", 1, 3, 2, 1);
     private ArrayList<Book> uniqueBooks = new ArrayList<>();
@@ -18,6 +19,7 @@ public class AvailableBooksGUI extends GBDialog {
     public AvailableBooksGUI(JFrame jFrame, Main gui) {
         super(jFrame);
         this.gui = gui;
+        this.frame = jFrame;
         setTitle("Available Books");
         this.setSize(500, 500);
         bookDetails.setEditable(false);
@@ -50,7 +52,8 @@ public class AvailableBooksGUI extends GBDialog {
         bookDetails.setText(""
                 + "Title: " + b.getTitle() + "\n"
                 + "Author: " + b.getAuthor() + "\n"
-                + "Available: " + bookAmt
+                + "Available: " + bookAmt + "\n"
+                + "Double click to loan out this book."
         );
     }
 
@@ -62,7 +65,10 @@ public class AvailableBooksGUI extends GBDialog {
 
     public void listDoubleClicked(JList listObj, String itemClicked) {
         if(listObj.equals(bookList)) {
-
+            Book b = gui.getLibrary().getAvailable().get(listObj.getSelectedIndex());
+            ReturnLoanDialog loanDialog = new ReturnLoanDialog(frame, this , gui);
+            loanDialog.init(b);
+            loanDialog.setVisible(true);
         }
     }
 

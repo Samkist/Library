@@ -7,14 +7,16 @@ import me.Samkist.Library.Main;
 
 import javax.swing.*;
 
-public class ReturnMenuGUI extends GBDialog {
+public class ReturnMenuGUI extends CustomDialog {
     private Main gui;
+    private JFrame frame;
     private JList bookList = addList(1, 4, 1, 4);
     private JTextArea bookDetails = addTextArea("No books borrowed", 1, 6, 2, 4);
     private JButton returnBook = addButton("Return Book", 2, 1, 1, 1);
 
     public ReturnMenuGUI(JFrame jFrame, Main gui) {
         super(jFrame);
+        this.frame = jFrame;
         this.gui = gui;
         setTitle("Return a Book");
         setSize(500, 500);
@@ -42,7 +44,8 @@ public class ReturnMenuGUI extends GBDialog {
                 + "Title: " + b.getTitle() + "\n"
                 + "Author: " + b.getAuthor() + "\n"
                 + "Borrower: " + b.getBorrower() + "\n"
-                + "Date Borrowed: " + b.getDateBorrowed().toString()
+                + "Date Borrowed: " + b.getDateBorrowed().toString() + "\n"
+                + "Double click to return this book."
         );
     }
 
@@ -60,7 +63,10 @@ public class ReturnMenuGUI extends GBDialog {
 
     public void listDoubleClicked(JList listObj, String itemClicked) {
         if(listObj.equals(bookList)) {
-            returnBook();
+            Book b = gui.getLibrary().getBorrowed().get(listObj.getSelectedIndex());
+            ReturnLoanDialog loanDialog = new ReturnLoanDialog(frame, this, gui);
+            loanDialog.init(b);
+            loanDialog.setVisible(true);
         }
     }
 

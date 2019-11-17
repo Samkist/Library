@@ -24,15 +24,30 @@ public class SearchByTitleGUI extends GBDialog {
         setTitle("Search by Title");
         searchResultDetails.setEditable(false);
     }
+    @SuppressWarnings("unchecked")
+    public void init() {
+        uniqueBooks = new ArrayList<>();
+        DefaultListModel model = (DefaultListModel)searchResults.getModel();
+        model.removeAllElements();
+        gui.getLibrary().getAllBooks().forEach(book -> {
+            if(!model.contains(book.getTitle()))
+                model.addElement(book.getTitle());
+        });
+        try {
+            for(int i = 0; i < model.size(); i++) {
+                uniqueBooks.add(gui.getLibrary().getFirstBookByName((String) model.getElementAt(i)));
+            }
+        } catch (BookNotFoundException e) {
+            messageBox(e.getMessage());
+        }
+    }
 
     @SuppressWarnings("unchecked")
     public void search(ArrayList<String> keywords) {
         ArrayList<Book> results = gui.getLibrary().getAllBooksByKeywords(keywords);
         uniqueBooks = new ArrayList<>();
         DefaultListModel model = (DefaultListModel)searchResults.getModel();
-        for(int i = 0; i < model.getSize(); i++) {
-            model.remove(i);
-        }
+        model.removeAllElements();
         results.forEach(book -> {
             if(!model.contains(book.getTitle()))
                 model.addElement(book.getTitle());

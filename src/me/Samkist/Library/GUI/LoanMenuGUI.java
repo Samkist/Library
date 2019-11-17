@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class LoanMenuGUI extends GBDialog {
+public class LoanMenuGUI extends CustomDialog {
     private Main gui;
     private JList bookList = addList(1, 4, 1, 5);
     private JLabel borrowerLabel = addLabel("Borrower Name: ", 1, 1, 1, 1);
@@ -67,6 +67,7 @@ public class LoanMenuGUI extends GBDialog {
         } catch (IllegalArgumentException e) {
             messageBox("Invalid date.");
         }
+        messageBox(b.getTitle() + " loaned to " + borrower + " on " + date + " successfully");
     }
 
     public void buttonClicked(JButton jButton) {

@@ -8,7 +8,7 @@ import me.Samkist.Library.Main;
 import javax.swing.*;
 
 @SuppressWarnings("unused")
-public class AddBooksGUI extends GBDialog {
+public class AddBooksGUI extends CustomDialog {
     private Main gui;
     private JLabel bookNameLabel = addLabel("Book Name:", 1, 1, 1, 1);
     private JLabel authorNameLabel = addLabel("Author: ", 2, 1, 1, 1);
@@ -38,4 +38,8 @@ public class AddBooksGUI extends GBDialog {
     }
 
 
+    @Override
+    public void init() {
+
+    }
 }
