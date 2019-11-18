@@ -1,6 +1,5 @@
 package me.Samkist.Library.GUI;
 
-import BreezySwing.GBDialog;
 import me.Samkist.Library.Book;
 import me.Samkist.Library.Exceptions.BookNotFoundException;
 import me.Samkist.Library.Exceptions.BookUnavailableException;

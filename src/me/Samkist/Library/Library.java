@@ -67,8 +67,6 @@ public class Library {
     public ArrayList<Book> getAllBooksByKeywords(ArrayList<String> keywords) {
         ArrayList<Book> books = new ArrayList<>();
         allBooks.forEach(book -> book.getKeywords().forEach(keyword -> {
-           if(keywords.contains(keyword))
-               books.add(book);
            keywords.forEach(kw -> {
                if(Pattern.compile(Pattern.quote(kw), Pattern.CASE_INSENSITIVE).matcher(keyword).find())
                    books.add(book);
