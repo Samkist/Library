@@ -15,7 +15,7 @@ public class Book {
     public Book(String title, String author) {
         this.title = title;
         this.author = author;
-        keywords = new ArrayList<String>(Arrays.asList(title.split(" ")));
+        keywords = new ArrayList<>(Arrays.asList(title.split(" ")));
     }
 
     public void borrowBook(String borrower, Date d) {
