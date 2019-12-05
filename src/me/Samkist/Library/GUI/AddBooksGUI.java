@@ -26,6 +26,10 @@ public class AddBooksGUI extends CustomDialog {
 
     public void buttonClicked(JButton jButton) {
         if(jButton.equals(addBooksButton)) {
+            if(bookNameField.getText() == null || authorNameField.getText() == null || bookQuantityField.getNumber() < 1) {
+                messageBox("Invalid data");
+                return;
+            }
             for(int i = 0; i < bookQuantityField.getNumber(); i++) {
                 gui.getLibrary().addBook(new Book(bookNameField.getText(), authorNameField.getText()));
             }

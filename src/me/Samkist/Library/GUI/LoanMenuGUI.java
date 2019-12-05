@@ -60,12 +60,39 @@ public class LoanMenuGUI extends CustomDialog {
         } catch (Exception e) {
             return;
         }
+        int[] months = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        String[] split = date.split("/");
+        int[] dateVal = new int[split.length];
         try {
-            gui.getLibrary().borrowBook(b.getTitle(), borrower, new Date(date));
+            int x = 0;
+            for(String s : split) {
+                dateVal[x++] = Integer.parseInt(s);
+            }
+            final String s = "Date corrected to " + dateVal[0] + "/" + dateVal[1] + "/" + dateVal[2];
+            if(dateVal[0] == 2) {
+                if(dateVal[2] % 4 == 0 || (dateVal[2] % 100 == 0 && dateVal[2] % 400 == 0) && dateVal[1] > 29) {
+                    dateVal[1] = 29;
+                    messageBox(s);
+                } else if(dateVal[1] > 28){
+                    dateVal[1] = 28;
+                    messageBox(s);
+                }
+            }
+            if(dateVal[1] > months[dateVal[0] - 1]) {
+                dateVal[1] = months[dateVal[0] - 1];
+                messageBox(s);
+            }
+        } catch(Exception e) {
+
+        }
+        try {
+            String s = dateVal[0] + "/" + dateVal[1] + "/" + dateVal[2];
+            gui.getLibrary().borrowBook(b.getTitle(), borrower, new Date(s));
         } catch(BookNotFoundException | BookUnavailableException e) {
             messageBox(e.getMessage());
         } catch (IllegalArgumentException e) {
             messageBox("Invalid date.");
+            return;
         }
         messageBox(b.getTitle() + " loaned to " + borrower + " on " + date + " successfully");
     }

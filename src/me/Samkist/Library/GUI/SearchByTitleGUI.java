@@ -70,7 +70,7 @@ public class SearchByTitleGUI extends GBDialog {
     }
     @SuppressWarnings("Duplicates")
     private void updateBookDetails(Book b) {
-        int bookAmt = (int) gui.getLibrary().getAvailable().stream().filter(book -> book.getTitle().equals(b.getTitle())).count();
+        int bookAmt = (int) gui.getLibrary().getAvailable().stream().filter(book -> book.getTitle().equalsIgnoreCase(b.getTitle())).count();
         int borrAmt = (int) gui.getLibrary().getBorrowed().stream().filter(book -> book.getTitle().equalsIgnoreCase(b.getTitle())).count();
         searchResultDetails.setText(""
                 + "Title: " + b.getTitle() + "\n"
